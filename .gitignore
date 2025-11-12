@@ -18,13 +18,9 @@ out-tsc/
 .DS_Store
 Thumbs.db
 
-# Environment files with sensitive data
-# Ignore local development config (has real API keys)
-src/environments/environment.ts
-
-# Production config is committed with placeholders
-# Real values come from Netlify environment variables
-# src/environments/environment.prod.ts - NOT ignored, safe to commit
+# Environment files - now committed with placeholder values
+# Real API keys are set in Netlify environment variables
+# Local users should edit these files with their own keys
 
 # Logs
 *.log
