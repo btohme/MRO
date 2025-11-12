@@ -1,0 +1,21 @@
+# Netlify Configuration for Orthodox Church Document Search
+
+[build]
+  # Build command - compile Angular app
+  command = "npm run build"
+
+  # Output directory - Angular build output
+  publish = "dist/mro/browser"
+
+  # Functions directory
+  functions = "netlify/functions"
+
+# Redirect all routes to index.html for Angular routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables (set these in Netlify dashboard)
+# GEMINI_API_KEY = your_gemini_api_key_here
+# GOOGLE_API_KEY = your_google_drive_api_key_here

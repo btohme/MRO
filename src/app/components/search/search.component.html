@@ -1,0 +1,109 @@
+<div class="search-container container">
+  <!-- CORS Warning for Gemini -->
+  <div *ngIf="showCorsWarning" class="cors-warning">
+    <div class="warning-icon">⚠️</div>
+    <div class="warning-content">
+      <h4>Gemini API CORS Issue Detected</h4>
+      <p>Google Gemini API doesn't work directly in browsers. When search fails, all documents will be shown.</p>
+      <p><strong>Quick Fix:</strong> Use Ollama instead (100% FREE, runs locally, no CORS issues)</p>
+      <div class="warning-steps">
+        <code>1. Download Ollama from https://ollama.ai/download</code><br>
+        <code>2. Run: ollama run llama3.1</code><br>
+        <code>3. Change searchEngine to 'ollama' in environment.ts</code>
+      </div>
+      <p class="warning-note">📖 See <strong>GEMINI_CORS_ISSUE.md</strong> for all solutions</p>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <div class="search-header">
+      <h2>Search Orthodox Documents</h2>
+      <p class="search-description">
+        Ask anything about saints, feasts, Byzantine chants, or liturgical services
+      </p>
+    </div>
+
+    <div class="search-input-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        placeholder="e.g., 'Saint John Chrysostom hymns' or 'Great Lent Byzantine notation'"
+        class="search-input"
+        [disabled]="isSearching"
+      />
+      <button
+        class="search-button"
+        (click)="onSearch()"
+        [disabled]="isSearching || !searchQuery.trim()"
+      >
+        <span *ngIf="!isSearching">🔍 Search with AI</span>
+        <span *ngIf="isSearching" class="loading">⏳ Searching...</span>
+      </button>
+    </div>
+
+    <div class="search-examples">
+      <span class="example-label">Try:</span>
+      <button class="example-tag" (click)="searchQuery = 'Christmas Byzantine chant'; onSearch()">
+        Christmas Byzantine chant
+      </button>
+      <button class="example-tag" (click)="searchQuery = 'Saint Nicholas feast day'; onSearch()">
+        Saint Nicholas feast day
+      </button>
+      <button class="example-tag" (click)="searchQuery = 'Great Lent Orthros'; onSearch()">
+        Great Lent Orthros
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="hasSearched && !isSearching" class="results-section">
+    <div *ngIf="searchResults.length === 0" class="no-results">
+      <div class="no-results-icon">📚</div>
+      <p>No documents found matching your query.</p>
+      <p class="hint">Try rephrasing or using different keywords.</p>
+    </div>
+
+    <div *ngIf="searchResults.length > 0" class="results-list">
+      <h3 class="results-header">Found {{ searchResults.length }} relevant documents</h3>
+
+      <div
+        *ngFor="let doc of searchResults; let i = index"
+        class="result-card"
+        (click)="openPDF(doc)"
+      >
+        <div class="result-rank">{{ i + 1 }}</div>
+        <div class="result-content">
+          <h4 class="result-title">{{ doc.name }}</h4>
+          <p class="result-path">
+            <span class="folder-icon">📁</span>
+            {{ doc.folder || 'Root folder' }}
+          </p>
+          <p *ngIf="doc.excerpt" class="result-excerpt">{{ doc.excerpt }}</p>
+          <div class="result-meta">
+            <span class="meta-item">📄 {{ (doc.size / 1024).toFixed(0) }} KB</span>
+            <span class="meta-item">📅 {{ doc.modifiedTime | date: 'mediumDate' }}</span>
+            <span *ngIf="doc.relevanceScore" class="relevance-score">
+              ✨ {{ doc.relevanceScore }}% relevant
+            </span>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="action-btn view-btn" title="View PDF">
+            <span>👁️ View</span>
+          </button>
+          <button
+            class="action-btn download-btn"
+            (click)="downloadPDF(doc, $event)"
+            title="Download PDF"
+          >
+            <span>⬇️ Download</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+/* Global Styles - Byzantine/Orthodox Theme */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Byzantine color palette */
+  --primary-gold: #D4AF37;
+  --deep-burgundy: #800020;
+  --dark-blue: #1A1F4D;
+  --ivory: #FFFFF0;
+  --gold-accent: #FFD700;
+  --shadow: rgba(0, 0, 0, 0.3);
+
+  /* Fonts */
+  --font-serif: 'Cinzel', serif;
+  --font-body: 'Crimson Text', serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, var(--dark-blue) 0%, #2C3E80 100%);
+  color: var(--ivory);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--primary-gold);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--gold-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--primary-gold);
+  }
+}
+
+button {
+  font-family: var(--font-serif);
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-blue);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-gold);
+  border-radius: 5px;
+
+  &:hover {
+    background: var(--gold-accent);
+  }
+}

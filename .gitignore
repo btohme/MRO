@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+out-tsc/
+.angular/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files with sensitive data
+# NOTE: Keep .gitignore but don't commit with real API keys!
+# Use environment variables for production
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Misc
+.sass-cache/
+connect.lock
+coverage/
+.nyc_output/
+typings/
