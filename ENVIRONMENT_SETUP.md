@@ -10,7 +10,7 @@ The actual `environment.ts` and `environment.prod.ts` files are **NOT included**
    ```powershell
    # Copy development template
    copy src\environments\environment.template.ts src\environments\environment.ts
-   
+
    # Copy production template
    copy src\environments\environment.prod.template.ts src\environments\environment.prod.ts
    ```
