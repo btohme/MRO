@@ -19,12 +19,12 @@ out-tsc/
 Thumbs.db
 
 # Environment files with sensitive data
-# Ignore actual config files with real API keys
+# Ignore local development config (has real API keys)
 src/environments/environment.ts
-src/environments/environment.prod.ts
 
-# BUT allow template files (these are safe to commit)
-!src/environments/*.template.ts
+# Production config is committed with placeholders
+# Real values come from Netlify environment variables
+# src/environments/environment.prod.ts - NOT ignored, safe to commit
 
 # Logs
 *.log
