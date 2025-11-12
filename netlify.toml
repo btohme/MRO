@@ -4,8 +4,8 @@
   # Build command - compile Angular app
   command = "npm run build"
 
-  # Output directory - Angular build output (match angular.json outputPath)
-  publish = "dist/orthodox-library/browser"
+  # Output directory - Angular build output
+  publish = "dist/orthodox-library"
 
   # Functions directory
   functions = "netlify/functions"
