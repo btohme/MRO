@@ -47,8 +47,8 @@ Then: **Deploys** → **Trigger deploy** → **Deploy site**
 
 ## 🎯 That's It!
 
-**Total Time:** ~10 minutes  
-**Total Cost:** $0/month  
+**Total Time:** ~10 minutes
+**Total Cost:** $0/month
 **Your site is LIVE!** ☦️
 
 ---

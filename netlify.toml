@@ -4,11 +4,15 @@
   # Build command - compile Angular app
   command = "npm run build"
 
-  # Output directory - Angular build output
-  publish = "dist/mro/browser"
+  # Output directory - Angular build output (match angular.json outputPath)
+  publish = "dist/orthodox-library/browser"
 
   # Functions directory
   functions = "netlify/functions"
+
+# Build environment settings
+[build.environment]
+  NODE_VERSION = "22"
 
 # Redirect all routes to index.html for Angular routing
 [[redirects]]
