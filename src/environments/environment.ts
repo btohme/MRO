@@ -8,7 +8,7 @@ export const environment = {
   // ===== GOOGLE GEMINI (FREE) ===== ⭐ RECOMMENDED
   // Get free API key: https://makersuite.google.com/app/apikey
   // Free tier: 60 requests per minute, no credit card needed
-  geminiApiKey: 'AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo',
+  geminiApiKey: 'AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo', // Your real key (local only)
   geminiModel: 'gemini-pro',
   useServerlessFunction: false, // Set to true when deployed to Netlify/Vercel
 
@@ -31,6 +31,6 @@ export const environment = {
   huggingfaceModel: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
 
   // ===== GOOGLE DRIVE (ALWAYS FREE) =====
-  googleDriveFolderId: '1X3bXO1F7Ku_EHI-gyU9-HBPSJcC3YwuF',
-  googleApiKey: 'AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ'
+  googleDriveFolderId: '1X3bXO1F7Ku_EHI-gyU9-HBPSJcC3YwuF', // Your real folder ID (local only)
+  googleApiKey: 'AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ' // Your real key (local only)
 };
