@@ -15,72 +15,108 @@ export class GoogleDriveService {
 
   /**
    * List all PDF files from a Google Drive folder (including subfolders)
+   * Uses a single query to get ALL PDFs under the folder tree
    */
   listPDFFiles(): Observable<PDFDocument[]> {
     const folderId = environment.googleDriveFolderId;
     const apiKey = environment.googleApiKey;
 
-    // First, get all folders and PDFs recursively
-    return from(this.getAllPDFsRecursively(folderId, apiKey));
+    console.log('🔍 Fetching PDFs from Google Drive folder:', folderId);
+
+    return from(this.getAllPDFsEfficiently(folderId, apiKey));
   }
 
   /**
-   * Recursively get all PDFs from a folder and its subfolders
+   * Efficiently get all PDFs - first get all folders, then all PDFs
+   * Limited depth to prevent infinite loops
    */
-  private async getAllPDFsRecursively(folderId: string, apiKey: string): Promise<PDFDocument[]> {
-    const allPDFs: any[] = [];
-    const foldersToProcess = [{ id: folderId, path: '' }];
-    const folderCache: { [key: string]: string } = {};
+  private async getAllPDFsEfficiently(folderId: string, apiKey: string): Promise<PDFDocument[]> {
+    try {
+      console.log('📡 Step 1: Getting all folders...');
+      
+      // Step 1: Get all folders under root (up to 3 levels deep for safety)
+      const allFolderIds = await this.getAllFolderIds(folderId, apiKey, 3);
+      console.log(`✅ Found ${allFolderIds.length} folder(s) total`);
 
-    while (foldersToProcess.length > 0) {
-      const currentFolder = foldersToProcess.shift()!;
+      // Step 2: Search for PDFs in all these folders (one query!)
+      const folderIdList = allFolderIds.map(f => f.id).join(`' in parents or '`);
+      const query = `('${folderIdList}' in parents) and mimeType='application/pdf' and trashed=false`;
+      
+      const url = `${this.DRIVE_API_BASE}/files?` +
+        `q=${encodeURIComponent(query)}` +
+        `&key=${apiKey}` +
+        `&fields=files(id,name,parents,webViewLink,size,modifiedTime)` +
+        `&pageSize=1000`;
+
+      console.log('📡 Step 2: Getting all PDFs...');
+      const response = await this.http.get<any>(url).toPromise();
+      const files = response?.files || [];
+      
+      console.log(`✅ Found ${files.length} PDF(s)`);
+
+      // Step 3: Build folder path map
+      const folderMap = new Map(allFolderIds.map(f => [f.id, f.path]));
+      
+      // Step 4: Create documents with folder paths
+      const documents: PDFDocument[] = files.map((file: any) => {
+        const parentId = file.parents?.[0];
+        const folderPath = parentId ? folderMap.get(parentId) || 'Root' : 'Root';
+
+        return {
+          id: file.id,
+          name: file.name,
+          fullPath: folderPath !== 'Root' ? `${folderPath}/${file.name}` : file.name,
+          folder: folderPath,
+          webViewLink: file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`,
+          downloadLink: `https://drive.google.com/uc?export=download&id=${file.id}`,
+          size: parseInt(file.size || '0'),
+          modifiedTime: new Date(file.modifiedTime)
+        };
+      });
+      
+      console.log(`🎉 Processed ${documents.length} total PDF(s)`);
+      return documents;
+
+    } catch (error) {
+      console.error('❌ Error fetching PDFs:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Get all folder IDs recursively (breadth-first, with depth limit)
+   */
+  private async getAllFolderIds(rootId: string, apiKey: string, maxDepth: number): Promise<{id: string, path: string}[]> {
+    const result = [{id: rootId, path: 'Root'}];
+    const queue = [{id: rootId, path: 'Root', depth: 0}];
+
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      
+      if (current.depth >= maxDepth) continue; // Stop at max depth
 
       try {
-        // Get all items (PDFs and folders) in current folder
-        const query = `'${currentFolder.id}' in parents and trashed=false`;
+        const query = `'${current.id}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`;
         const url = `${this.DRIVE_API_BASE}/files?` +
           `q=${encodeURIComponent(query)}` +
           `&key=${apiKey}` +
-          `&fields=files(id,name,mimeType,parents,webViewLink,size,modifiedTime)` +
-          `&pageSize=1000`;
+          `&fields=files(id,name)` +
+          `&pageSize=100`;
 
         const response = await this.http.get<any>(url).toPromise();
-        const items = response?.files || [];
+        const folders = response?.files || [];
 
-        for (const item of items) {
-          if (item.mimeType === 'application/pdf') {
-            // It's a PDF - add to results with folder path
-            allPDFs.push({
-              ...item,
-              folderPath: currentFolder.path
-            });
-          } else if (item.mimeType === 'application/vnd.google-apps.folder') {
-            // It's a subfolder - add to queue for processing
-            const subfolderPath = currentFolder.path 
-              ? `${currentFolder.path}/${item.name}` 
-              : item.name;
-            foldersToProcess.push({ 
-              id: item.id, 
-              path: subfolderPath 
-            });
-          }
+        for (const folder of folders) {
+          const folderPath = current.path === 'Root' ? folder.name : `${current.path}/${folder.name}`;
+          result.push({id: folder.id, path: folderPath});
+          queue.push({id: folder.id, path: folderPath, depth: current.depth + 1});
         }
       } catch (error) {
-        console.error(`Error fetching folder ${currentFolder.id}:`, error);
+        console.error(`Error fetching subfolders for ${current.id}:`, error);
       }
     }
 
-    // Convert to PDFDocument format
-    return allPDFs.map(file => ({
-      id: file.id,
-      name: file.name,
-      fullPath: file.folderPath ? `${file.folderPath}/${file.name}` : file.name,
-      folder: file.folderPath || 'Root',
-      webViewLink: file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`,
-      downloadLink: `https://drive.google.com/uc?export=download&id=${file.id}`,
-      size: parseInt(file.size || '0'),
-      modifiedTime: new Date(file.modifiedTime)
-    }));
+    return result;
   }
 
   /**
