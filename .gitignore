@@ -19,10 +19,12 @@ out-tsc/
 Thumbs.db
 
 # Environment files with sensitive data
-# NOTE: Keep .gitignore but don't commit with real API keys!
-# Use environment variables for production
+# Ignore actual config files with real API keys
 src/environments/environment.ts
 src/environments/environment.prod.ts
+
+# BUT allow template files (these are safe to commit)
+!src/environments/*.template.ts
 
 # Logs
 *.log

@@ -47,6 +47,22 @@ An Angular application that uses AI to help users search through Orthodox Church
 
 ### 3. Configure the Application
 
+**⚠️ IMPORTANT:** If you cloned from GitHub, the environment files don't exist yet!
+
+**Run this first:**
+```powershell
+# Windows
+.\setup-environment.bat
+
+# Linux/Mac
+chmod +x setup-environment.sh
+./setup-environment.sh
+```
+
+This creates `environment.ts` and `environment.prod.ts` from templates.
+
+**Then configure:**
+
 1. Open `src/environments/environment.ts`
 2. Replace the placeholders:
 
