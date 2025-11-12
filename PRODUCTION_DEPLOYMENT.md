@@ -53,8 +53,9 @@ git push -u origin main
 1. In Netlify dashboard, go to "Site settings" → "Environment variables"
 2. Add these variables:
    ```
-   GEMINI_API_KEY = AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo
-   GOOGLE_API_KEY = AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ
+   GEMINI_API_KEY = your-gemini-api-key-here
+   GOOGLE_API_KEY = your-google-api-key-here
+   GOOGLE_DRIVE_FOLDER_ID = your-folder-id-here
    ```
 3. Redeploy: "Deploys" → "Trigger deploy" → "Deploy site"
 
@@ -88,8 +89,9 @@ Same as Netlify (see above)
 1. In Vercel dashboard, go to "Settings" → "Environment Variables"
 2. Add these variables (for all environments):
    ```
-   GEMINI_API_KEY = AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo
-   GOOGLE_API_KEY = AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ
+   GEMINI_API_KEY = your-gemini-api-key-here
+   GOOGLE_API_KEY = your-google-api-key-here
+   GOOGLE_DRIVE_FOLDER_ID = your-folder-id-here
    ```
 3. Redeploy: "Deployments" → "..." → "Redeploy"
 

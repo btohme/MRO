@@ -29,9 +29,9 @@ Add these 3:
 
 | Key | Value |
 |-----|-------|
-| `GEMINI_API_KEY` | `AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo` |
-| `GOOGLE_API_KEY` | `AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ` |
-| `GOOGLE_DRIVE_FOLDER_ID` | `1X3bXO1F7Ku_EHI-gyU9-HBPSJcC3YwuF` |
+| `GEMINI_API_KEY` | `your-gemini-api-key` |
+| `GOOGLE_API_KEY` | `your-google-api-key` |
+| `GOOGLE_DRIVE_FOLDER_ID` | `your-folder-id` |
 
 Then: **Deploys** → **Trigger deploy** → **Deploy site**
 

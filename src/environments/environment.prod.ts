@@ -22,6 +22,6 @@ export const environment = {
   huggingfaceModel: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
 
   // ===== GOOGLE DRIVE (ALWAYS FREE) =====
-  googleDriveFolderId: '1X3bXO1F7Ku_EHI-gyU9-HBPSJcC3YwuF',
-  googleApiKey: 'AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ'
+  googleDriveFolderId: 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE',
+  googleApiKey: 'YOUR_GOOGLE_API_KEY_HERE'
 };

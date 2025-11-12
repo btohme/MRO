@@ -82,19 +82,19 @@ Your site is deployed, but **AI search won't work yet** because the API keys are
 
 #### Variable 1: GEMINI_API_KEY
 - **Key:** `GEMINI_API_KEY`
-- **Value:** `AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo`
+- **Value:** `your-gemini-api-key-here`
 - **Scopes:** Check all (Production, Deploy Previews, Branch deploys)
 - Click **"Create variable"**
 
 #### Variable 2: GOOGLE_API_KEY
 - **Key:** `GOOGLE_API_KEY`
-- **Value:** `AIzaSyBPkVa8I499jcowdJ8z1Akq1jAxX7LnNgQ`
+- **Value:** `your-google-api-key-here`
 - **Scopes:** Check all
 - Click **"Create variable"**
 
 #### Variable 3: GOOGLE_DRIVE_FOLDER_ID (Optional but recommended)
 - **Key:** `GOOGLE_DRIVE_FOLDER_ID`
-- **Value:** `1X3bXO1F7Ku_EHI-gyU9-HBPSJcC3YwuF`
+- **Value:** `your-google-drive-folder-id`
 - **Scopes:** Check all
 - Click **"Create variable"**
 

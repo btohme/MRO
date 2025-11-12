@@ -45,7 +45,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const GEMINI_API_KEY = 'AIzaSyC29T-y2K9JQThm_iO-czcbxhGPzdIihlo';
+const GEMINI_API_KEY = 'your-gemini-api-key-here';
 
 app.post('/api/gemini', async (req, res) => {
   try {

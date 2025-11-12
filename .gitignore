@@ -22,6 +22,9 @@ Thumbs.db
 # Real API keys are set in Netlify environment variables
 # Local users should edit these files with their own keys
 
+# Private API keys file (never commit!)
+MY_API_KEYS.txt
+
 # Logs
 *.log
 npm-debug.log*
